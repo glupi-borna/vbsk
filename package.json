@@ -1,0 +1,19 @@
+{
+  "name": "vbsk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "generateDistribution.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BornaLang/vbsk.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/BornaLang/vbsk/issues"
+  },
+  "homepage": "https://github.com/BornaLang/vbsk#readme",
+  "dependencies": {
+    "pngjs": "^3.4.0"
+  }
+}
