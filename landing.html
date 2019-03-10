@@ -8,6 +8,14 @@
     <title>VARBOSKA</title>
     <script>
       (() => {
+        console.log(`
+##  #    #  ### ###     ##   #  # #  ## 
+# # #   # #  #  #       # # # # # # #   
+##  #   ###  #  ##      ##  # #  #   #  
+#   #   # #  #  #       # # # #  #    # 
+#   ### # #  #  ###     ##   #   #  ##  
+        `);
+
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
         const element = document.getElementById("favicon");
@@ -50,5 +58,12 @@
   </head>
   <body
     onclick="window.open('https://varboska.bandcamp.com/releases', '_self')"
-  ></body>
+  >
+    <!--
+    ##  #    #  ### ###     ##   #  # #  ## 
+    # # #   # #  #  #       # # # # # # #   
+    ##  #   ###  #  ##      ##  # #  #   #  
+    #   #   # #  #  #       # # # #  #    # 
+    #   ### # #  #  ###     ##   #   #  ##  
+  --></body>
 </html>
