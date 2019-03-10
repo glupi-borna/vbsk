@@ -12,8 +12,6 @@ playerElement.onplay = () => {
       let filterString = "";
       for (let filterKey in filter) {
         let filterValue = filter[filterKey]();
-        console.log(filterKey, filterValue);
-
         if (filterValue) {
           filterString += filterKey + "(" + filterValue + ")";
         }
@@ -83,6 +81,8 @@ let largestDistance = 0;
     const minSize = Math.min(window.innerWidth, window.innerHeight);
     app.renderer.resize(minSize, minSize);
   };
+
+  window.onresize();
 
   for (let i = 0; i < 2500; i++) {
     points.push(pointFromDistribution());
