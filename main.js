@@ -269,6 +269,8 @@ const playerEffects = [
   }
 ];
 
+// TODO: implement batching like in https://pixijs.io/examples/#/demos/batch.js
+
 // NOTE: old stuff
 // /**
 //  * @function point

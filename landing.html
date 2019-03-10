@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link id="favicon" rel="icon" type="image/png" href="" />
+    <title>VARBOSKA</title>
+    <script>
+      (() => {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        const element = document.getElementById("favicon");
+
+        canvas.height = 32;
+        canvas.width = 32;
+
+        context.beginPath();
+        context.fillStyle = "black";
+        context.rect(0, 0, canvas.width, canvas.height);
+        context.fill();
+
+        context.strokeStyle = "white";
+        context.lineWidth = "2";
+        context.beginPath();
+        context.ellipse(16, 16, 6, 6, 0, 0, 360);
+        context.stroke();
+
+        element.href = canvas.toDataURL("image/png", 0.85);
+      })();
+    </script>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        background: url("assets/29.png");
+        background-size: auto;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body
+    onclick="window.open('https://varboska.bandcamp.com/releases', '_self')"
+  ></body>
+</html>
