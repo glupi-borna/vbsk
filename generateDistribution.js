@@ -10,8 +10,6 @@ fs.createReadStream("assets/distribution.png")
     })
   )
   .on("parsed", function() {
-    const invertedWidth = 1 / this.width;
-    const invertedHeight = 1 / this.height;
     let totalBrightness = 0;
     for (var y = 0; y < this.height; y++) {
       for (var x = 0; x < this.width; x++) {
@@ -21,8 +19,8 @@ fs.createReadStream("assets/distribution.png")
         totalBrightness += pixelBrightness;
 
         distribution.push({
-          x: x * invertedWidth,
-          y: y * invertedHeight,
+          x: x,
+          y: y,
           weight: totalBrightness
         });
       }
@@ -30,15 +28,37 @@ fs.createReadStream("assets/distribution.png")
 
     for (let i = 0; i < distribution.length; i++) {
       distribution[i].weight /= totalBrightness;
+      distribution[i].weight = Math.round(distribution[i].weight * 5000) / 5000;
+    }
+
+    let weightBuckets = [];
+    for (let i = 0; i < distribution.length; i++) {
+      let weight = distribution[i].weight;
+      let bucket = weightBuckets.find(b => b[0] === weight);
+
+      if (bucket) {
+        bucket[1] += 1;
+      } else {
+        weightBuckets.push([weight, 1]);
+      }
     }
 
     const coordinateArray = distribution.map(d => [d.x, d.y]);
-    const weightArray = distribution.map(d => d.weight);
+
+    /* IDEA: Split distribution into multiple files (one for coords, one for weights?)*/
+
+    /* IDEA: Instead of writing both coords, write the pixel index (width * y + x)
+     * and then unwrap that on the client side (shaves off another ~100kbs).
+     */
 
     fs.writeFile(
       "./assets/distribution.js",
       "const distribution = " +
-        JSON.stringify({ coords: coordinateArray, weight: weightArray }),
+        JSON.stringify({
+          coords: coordinateArray,
+          wtBkts: weightBuckets,
+          invSize: [1 / this.width, 1 / this.height]
+        }),
       err => {
         if (err) {
           console.log(err);

@@ -9,12 +9,12 @@
     <script>
       (() => {
         console.log(`
-##  #    #  ### ###     ##   #  # #  ## 
-# # #   # #  #  #       # # # # # # #   
-##  #   ###  #  ##      ##  # #  #   #  
-#   #   # #  #  #       # # # #  #    # 
-#   ### # #  #  ###     ##   #   #  ##  
-        `);
+      ##  #    #  ### ###     ##   #  # #  ##
+      # # #   # #  #  #       # # # # # # #
+      ##  #   ###  #  ##      ##  # #  #   #
+      #   #   # #  #  #       # # # #  #    #
+      #   ### # #  #  ###     ##   #   #  ##
+              `);
 
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
@@ -36,6 +36,57 @@
 
         element.href = canvas.toDataURL("image/png", 0.85);
       })();
+
+      window.onload = function() {
+        var canvas = document.getElementById("canvas"),
+          context = canvas.getContext("2d"),
+          width = (canvas.width = window.innerWidth),
+          height = (canvas.height = window.innerHeight);
+
+        var centerY = height * 0.5,
+          centerX = width * 0.5,
+          baseRadius = 10,
+          baseRed = 255,
+          baseGreen = 255,
+          baseBlue = 255,
+          baseAlpha = 1,
+          offset = Math.min(height, width) * 0.45, //radius of circling
+          speed = 0.01,
+          angle = -Math.PI * 0.5;
+
+        render();
+
+        window.onresize = () => {
+          canvas.width = window.innerWidth;
+          width = canvas.width;
+          canvas.height = window.innerHeight;
+          height = canvas.height;
+        };
+
+        function render() {
+          offset = Math.min(height, width) * 0.45; //radius of circling
+          centerX = width * 0.5;
+          centerY = height * 0.5;
+
+          var x = centerX + Math.cos(angle) * offset;
+          var y = centerY + Math.sin(angle) * offset;
+          var radius = baseRadius + Math.sin(angle) * 10;
+          var red = 255; // baseRed/2 + Math.sin(angle)*100;
+          var green = 255; //baseGreen/2 + Math.sin(2*angle)*100;
+          var blue = 255; //baseBlue/2 + Math.sin(3*angle)*100;
+          var alpha = baseAlpha + Math.sin(angle);
+
+          context.fillStyle = "rgba( " + red + "," + green + "," + blue + ",1)";
+          context.clearRect(0, 0, width, height);
+          context.beginPath();
+          context.arc(x, y, radius, 0, Math.PI * 2, false);
+          context.fill();
+
+          angle += speed;
+
+          requestAnimationFrame(render);
+        }
+      };
     </script>
     <style>
       * {
@@ -45,7 +96,6 @@
 
       body {
         background: url("assets/29.png");
-        background-size: auto;
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
@@ -53,12 +103,14 @@
         height: 100vh;
         background-color: black;
         cursor: pointer;
+        overflow: hidden;
       }
     </style>
   </head>
   <body
     onclick="window.open('https://varboska.bandcamp.com/releases', '_self')"
   >
+    <canvas id="canvas"></canvas>
     <!--
     ##  #    #  ### ###     ##   #  # #  ## 
     # # #   # #  #  #       # # # # # # #   

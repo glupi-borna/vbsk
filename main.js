@@ -84,6 +84,19 @@ let largestDistance = 0;
 
   window.onresize();
 
+  let unwrappedWeights = [];
+
+  for (let weight of distribution.wtBkts) {
+    let wt = weight[0];
+    let cnt = weight[1];
+
+    for (let i = cnt - 1; i >= 0; i--) {
+      unwrappedWeights.push(wt);
+    }
+  }
+
+  distribution.weight = unwrappedWeights;
+
   for (let i = 0; i < 2500; i++) {
     points.push(pointFromDistribution());
     if (points[i].distance > largestDistance) {
@@ -114,6 +127,9 @@ function binarySearchDistribution(x) {
     let mid = Math.floor(lower + (upper - lower) / 2);
 
     if (upper < lower) {
+      if (mid < 0) {
+        return 0;
+      }
       return mid;
     }
 
@@ -138,7 +154,11 @@ function binarySearchDistribution(x) {
  */
 function getFromDistribution() {
   let coord = distribution.coords[binarySearchDistribution(Math.random())];
-  return coord;
+
+  return [
+    coord[0] * distribution.invSize[0],
+    coord[1] * distribution.invSize[1]
+  ];
 }
 
 /**
